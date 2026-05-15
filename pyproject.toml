@@ -1,0 +1,20 @@
+[project]
+name = "local-scribe"
+version = "0.1.0"
+description = "Local Whisper transcription producing ElevenLabs Scribe-compatible JSON. Drop-in replacement for video-use's transcribe step."
+license = { file = "LICENSE" }
+# faster-whisper / ctranslate2 wheels lag the latest Python; pin to a known-good range.
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "faster-whisper>=1.0.3",
+]
+
+[project.scripts]
+local-scribe = "local_scribe.transcribe:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["local_scribe*"]
