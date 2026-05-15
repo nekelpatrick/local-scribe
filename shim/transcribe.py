@@ -97,7 +97,7 @@ def main() -> None:
     """CLI entry for `python helpers/transcribe.py <video>` invocations."""
     ap = argparse.ArgumentParser(
         description="Transcribe a video with local Whisper (drop-in replacement "
-                    "for video-use's transcribe.py — routes to local-scribe).",
+                    "for video-use's transcribe.py -- routes to local-scribe).",
     )
     ap.add_argument("video", type=Path, help="Path to video file")
     ap.add_argument(
