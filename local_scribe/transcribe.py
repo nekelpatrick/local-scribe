@@ -216,6 +216,16 @@ def transcribe_one(
 
 
 def main() -> None:
+    # Windows consoles default to cp1252 and choke on Unicode chars in argparse
+    # --help output / our verbose prints. Force UTF-8 on stdout+stderr so help
+    # text and progress messages render the same on Win/macOS/Linux.
+    if sys.platform == "win32":
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
     ap = argparse.ArgumentParser(
         description="Transcribe a video locally with faster-whisper, "
                     "writing ElevenLabs Scribe-compatible JSON.",
@@ -261,7 +271,7 @@ def main() -> None:
         type=str,
         default="auto",
         choices=["auto", "int8", "int8_float16", "float16", "float32"],
-        help="auto → float16 on CUDA, int8 on CPU.",
+        help="auto = float16 on CUDA, int8 on CPU.",
     )
     args = ap.parse_args()
 
